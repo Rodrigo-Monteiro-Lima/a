@@ -285,13 +285,15 @@ $(async function () {
             $(`#userInfoModal .modal-title`).text(data.userInfo.name);
             $(`#userInfoUser`).text(data.userInfo.userId);
             $(`#userInfoEmail`).text(data.userInfo.email);
-        } else {
-            // couldn't login
-            data.loader.hide();
-            loginModal.show();            
         }
-    } else {
-        // not logged in, show Login modal
-        loginModal.show();
+        //  else {
+        //     // couldn't login
+        //     data.loader.hide();
+        //     loginModal.show();            
+        // }
     }
+    //  else {
+    //     // not logged in, show Login modal
+    //     loginModal.show();
+    // }
 })
