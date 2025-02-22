@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Docusign Embedded Views v2</title>
+    <meta name="author" content="Docusign Examples">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.1/mdb.min.css">
+    <link rel="stylesheet" href="css.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+</head>
+<body>
+<container class="c">
+    <!-- top element -->
+    <container class="ctop">
+        <container class="fixh">
+            <container class="col2parent">
+                <h3 class="child1">
+                    Embedded Views</h3>
+                <div class="child2">
+                    <div id="login">
+                        <a id="btnOauth" class="btn btn-primary" type="button" role="button">
+                            Login with Docusign</a>
+
+                        <!-- https://mdbootstrap.com/docs/standard/extended/dropdown-button/ -->
+                        <a id="internalLogin" class="hide btn btn-warning" type="button" role="button">
+                            Internal Login</a>
+                        <p>
+                            Use your Docusign <b>Developer Account.</b><br/>Don't have one?
+                            <a href="https://go.docusign.com/o/sandbox/?utm_campaign=GBL_XX_DEV_NEW_2208_ExternalProgrammingTools&utm_medium=display&utm_source=jsfiddle" target="_blank">Free signup!</a>
+                        </p>
+                    </div>
+
+                    <div id="loggedin" class="hide">
+                        <p id="lname" class="lname mb-0"></p>
+                        <p id="lemail" class="mb-0"></p>
+                        <p id="laccount" class="mb-0"></p>
+                        <p id="laccountname" class="mb-1"></p>
+                        <p id="saccount" class="hide">
+                            <a data-mdb-toggle="modal"
+                               data-mdb-target="#switchAccountModal">
+                                Switch Account</a>
+                        </p>
+                    </div>
+                </div>
+            </container>
+            <noscript>
+                <h1>Problem! This page <i>requires</i> JavaScript support. 
+                    Please update your browser settings.
+                </h1>
+            </noscript>
+            <p>
+                This example demonstrates embedded views via the revised API.</p>
+
+            <section id="spinner" class="hide">
+                <div class="spinner">
+                    <div class="rect1"></div>
+                    <div class="rect2"></div>
+                    <div class="rect3"></div>
+                    <div class="rect4"></div>
+                    <div class="rect5"></div>
+                </div>
+            </section>
+            <div id="doit" class="hide">
+                <select id="action" class="form-select display-inline" aria-label="Action select">
+                    <option>Envelope Send</option>
+                    <option>Envelope Correct</option>
+                    <!-- 
+                    <option>Envelope Recipient Preview</option>
+                    <option>Envelope Recipient Manual Review</option>  -->
+                    <option>Template Edit</option>
+                    <!-- <option>Template Document Responsive HTML Preview</option>
+                    <option>Template Recipient Preview</option>  -->
+                </select>&nbsp;&nbsp;&nbsp;
+                <a id="btnDoit2" class="btn btn-primary" type="button" role="button">
+                    Go!</a>
+                <a id="btnDoit3" class="btn btn-primary mlb" type="button" role="button">
+                        Save configuration to URL</a>
+                <form>
+                    <div class="mb-3">
+                        <label for="comment" class="form-label" style="width:40em;">Your comment about this configuration</label>
+                        <textarea id="comment" class="form-control" rows="3" style="width:40em;"></textarea>
+                    </div>
+                    <div>
+                        <input id="blankET" class="form-check-input" type="checkbox">
+                        <label for="blankET" class="form-label">Use a blank envelope/template</label>
+                    </div>
+                    <div class="mb-3 formItems">
+                        <label for="startingScreen" class="form-label">Starting Screen:</label>
+                        <select id="startingScreen" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                            <option value="Prepare" selected>Prepare page</option>
+                            <option value="Tagger">Tagger page</option>
+                        </select>
+                        <input id="showFormImages" class="form-check-input mlb" type="checkbox" checked>
+                        <label for="showFormImages" class="form-label">Show Form Images</label>
+                    </div>
+                </form>
+                <form id="uxForm" class="formItems">
+                    <div class="mb-3">
+                        <label for="sendButtonAction" class="form-label">Send Button action:</label>
+                        <select id="sendButtonAction" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                            <option selected>send</option>
+                            <option>redirect</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <input id="showBackButton" class="form-check-input" type="checkbox" checked>
+                        <label for="showBackButton" class="form-label">Show Back Button</label>
+                    </div>
+                    <div class="mb-3">
+                    <label for="backButtonAction" class="form-label">Back Button action:</label>
+                    <select id="backButtonAction" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                        <option selected>previousPage</option>
+                        <option>redirect</option>
+                    </select>
+                    </div>
+                    <div class="mb-3">
+                        <input id="showHeaderActions" class="form-check-input" type="checkbox" checked>
+                        <label for="showHeaderActions" class="form-label">Show Header Actions</label>
+                    </div>
+                    <div class="mb-3">
+                        <input id="showDiscardAction" class="form-check-input" type="checkbox" checked>
+                        <label for="showDiscardAction" class="form-label">Show Discard Action</label>
+                    </div>
+                    <div class="mb-3">
+                        <input id="showEditRecipients" class="form-check-input" type="checkbox" checked>
+                        <label for="showEditRecipients" class="form-label">Show Edit Recipients</label>
+                    </div>
+                    <div class="mb-3">
+                        <input id="showContactsList" class="form-check-input" type="checkbox" checked>
+                        <label for="showContactsList" class="form-label">Show Contact List</label>
+                    </div>
+                    <div class="mb-3">
+                        <input id="showEditDocuments" class="form-check-input" type="checkbox" checked>
+                        <label for="showEditDocuments" class="form-label">Show Edit Documents</label>
+                    </div>
+                    <div class="mb-3">
+                        <input id="showEditDocumentVisibility" class="form-check-input" type="checkbox" checked>
+                        <label for="showEditDocumentVisibility" class="form-label">Show Edit Document Visibility</label>
+                    </div>
+                    <div class="mb-3">
+                        <input id="showEditPages" class="form-check-input" type="checkbox" checked>
+                        <label for="showEditPages" class="form-label">Show Edit Pages</label>
+                    </div>
+                    <div class="mb-3">
+                        <label for="paletteSections" class="form-label">Palette Sections?</label>
+                        <select id="paletteSections" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                            <option selected>default</option>
+                            <option>none</option>
+                            <option>custom</option>
+                        </select>
+                    </div>
+                    <div class="mb-3 ms-5">
+                        <label for="paletteDefault" class="form-label">Custom palette: Default Section?</label>
+                        <select id="paletteDefault" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                            <option selected>custom</option>
+                            <option>merge</option>
+                            <option>notary</option>
+                            <option>seals</option>
+                            <option>smartContracts</option>
+                            <option>annotations</option>
+                            <option>smartSections</option>
+                            </select>
+                    </div>
+                    <div class="mb-3">
+                        <input id="showMatchingTemplatesPrompt" class="form-check-input" type="checkbox" checked>
+                        <label for="showMatchingTemplatesPrompt" class="form-label"><span class="f">Future: </span>Show Matching Templates Prompt</label>
+                    </div>
+                    <div class="mb-3">
+                        <input id="showAdvancedOptions" class="form-check-input" type="checkbox" checked>
+                        <label for="showAdvancedOptions" class="form-label"><span class="f">Future: </span>Show Advanced Options</label>
+                    </div>
+                    <div class="mb-3">
+                        <input id="showEditMessage" class="form-check-input" type="checkbox" checked>
+                        <label for="showEditMessage" class="form-label"><span class="f">Future: </span>Show Edit Message</label>
+                    </div>
+                    <div class="mb-3">
+                        <input id="showBulkSend" class="form-check-input" type="checkbox" checked>
+                        <label for="showBulkSend" class="form-label"><span class="f">Future: </span>Show Bulk Send</label>
+                    </div>
+                    <div class="mb-3">
+                        <input id="showSaveAsDocumentCustomField" class="form-check-input" type="checkbox" checked>
+                        <label for="showSaveAsDocumentCustomField" class="form-label"><span class="f">Future: </span>Show Save As Document Custom Field</label>
+                    </div>
+                    <div class="mb-3">
+                        <input id="showEnvelopeCustomFields" class="form-check-input" type="checkbox" checked>
+                        <label for="showEnvelopeCustomFields" class="form-label"><span class="f">Future: </span>Show Envelope Custom Fields</label>
+                    </div>
+                    <div class="mb-3 ms-5">
+                        <input id="psSettingsCustomShow" class="form-check-input" type="checkbox" checked>
+                        <label for="psSettingsCustomShow" class="form-label"><span class="f">Future: </span>Custom palette: Show Custom</label>
+                    </div>
+                    <div class="mb-3 ms-5">
+                        <input id="psSettingsMergeShow" class="form-check-input" type="checkbox" checked>
+                        <label for="psSettingsMergeShow" class="form-label"><span class="f">Future: </span>Custom palette: Show Merge</label>
+                    </div>
+                    <div class="mb-3 ms-5">
+                        <input id="psSettingsNotaryShow" class="form-check-input" type="checkbox" checked>
+                        <label for="psSettingsNotaryShow" class="form-label"><span class="f">Future: </span>Custom palette: Show Notary</label>
+                    </div>
+                    <div class="mb-3 ms-5">
+                        <input id="psSettingsSealsShow" class="form-check-input" type="checkbox" checked>
+                        <label for="psSettingsSealsShow" class="form-label"><span class="f">Future: </span>Custom palette: Show Seals</label>
+                    </div>
+                    <div class="mb-3 ms-5">
+                        <input id="psSettingsSmartContractsShow" class="form-check-input" type="checkbox" checked>
+                        <label for="psSettingsSmartContractsShow" class="form-label"><span class="f">Future: </span>Custom palette: Show Smart Contracts</label>
+                    </div>
+                    <div class="mb-3 ms-5">
+                        <input id="psSettingsAnnotationsShow" class="form-check-input" type="checkbox" checked>
+                        <label for="psSettingsAnnotationsShow" class="form-label"><span class="f">Future: </span>Custom palette: Show Annotations</label>
+                    </div>
+                    <div class="mb-3 ms-5">
+                        <input id="psSettingsSmartSectionsShow" class="form-check-input" type="checkbox" checked>
+                        <label for="psSettingsSmartSectionsShow" class="form-label"><span class="f">Future: </span>Custom palette: Show Smart Sections</label>
+                    </div>
+                </form>
+            </div>
+        </container>
+    </container>
+
+    <!-- The resizer -->
+    <div class="resizer" id="dragMe"></div>
+    <!-- Right element -->
+    <container class="cbottom">
+        <container class="fixh">
+            <h3>
+                Log
+            </h3>
+            <p id="log">
+                You can adjust the height of the sections.
+            </p>
+            <!-- 
+            <p><a href="https://docusign.github.io/app-examples/embedded-views-v2/#internal=1">Docusign staff: Enable Docusign internal logins</a>. You must be on the corporate VPN.</p>
+            -->
+            <div id="msg">
+            </div>
+        </container>
+    </container>
+</container>
+
+<!-- Switch account modal -->
+<div class="modal fade" id="switchAccountModal" tabindex="-1" aria-labelledby="Switch Account" aria-hidden="true">
+  <div class="modal-dialog modal-l modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Select an Account</h4>
+        <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body accountModal-body">
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.1/mdb.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script src="script.js" type="module"></script>
+</body>
+</html>

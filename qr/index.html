@@ -1,0 +1,45 @@
+<html lang="en">
+  <head>
+	<!--
+		Parse event value from URLs like this:
+		  https://docusign.github.io/returnUrl/?Envelope_ID=123
+	  -->
+	<script>
+	  function displayEvent(url)
+	  {
+ 	    let queryPart = url.split('?');
+	    if (queryPart.length > 1)
+	    {
+	      let qp1 = queryPart[1].split('&')[0];
+	      let name = qp1.split('=')[0].replace('_',' ');
+	      let val = qp1.split('=')[1].replace('_',' ');
+	      document.getElementsByTagName('h1')[0].innerText = `${name} = ${val}`;
+	    }
+	  }
+	</script>
+	<style type="text/css">
+	  body {
+	    margin: 0px;
+            background: #3867b6;
+	  }
+	  h1, h2 {
+	    font-family: 'Maven Pro',sans-serif;
+  	    font-weight: 700;
+	    text-align: center;
+	  }
+          h1 {font-size: 1.5em;}
+	  h2 {font-size: 1.2em;}
+	  #psHeader {
+	    margin-top: 5em;
+	    color: white;
+	  }
+	</style>
+  </head>
+  <body>
+	<div id="psHeader">
+	  <h1>(No query parameters)</h1>
+	  <h2>The QR code enables easy lookup and verification of a signed document</h2>
+	</div>
+	<script>displayEvent(location.href)</script>
+  </body>
+</html>

@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdn.jsdelivr.net/npm/pace-js@latest/pace.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@latest/pace-theme-default.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Template Edit Example</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link href="https://cdn.datatables.net/v/bs5/dt-2.1.8/cr-2.0.4/fh-4.0.1/r-3.0.3/datatables.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./library/bs5treeview/bstreeview.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css.css">
+</head>
+
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg bg-warning-subtle">
+        <!-- https://getbootstrap.com/docs/5.3/components/navbar/ -->
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Embedded Console Example</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-link nav-link" aria-current="page" data-bs-toggle="modal"
+                            data-bs-target="#settingsModal">Settings</button>
+                    </li>
+                    <li class="nav-item">
+                        <a id="logger" class="nav-link" aria-current="page" href="#">Start Logging</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="readme" class="nav-link" aria-current="page" 
+                        href="https://github.com/docusign/docusign.github.io/blob/master/app-examples/template-edit/README.md" 
+                        target="_blank">README</a>
+                    </li>
+                </ul>
+
+                <ul class="navbar-nav mb-2 mb-lg-0">
+                    <li class="nav-item" id="account-info">
+                    </li>
+                    <li class="nav-item" id="account-brand"> 
+                    </li>
+                    <li class="nav-item"> <!-- 40 x 40 -->
+                        <button id="user-picture" type="button" class="btn btn-link nav-link" data-bs-toggle="modal"
+                        data-bs-target="#userInfoModal"></button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- #################################################################### -->
+    <!-- #################################################################### -->
+    <!-- ###                                                               ## -->
+    <!-- ###  End of navigation. Start of body.                            ## -->
+    <!-- ###                                                               ## -->
+    <!-- #################################################################### -->
+    <!-- #################################################################### -->
+
+    <div id="status" hidden>
+        <div class="progress" role="progressbar">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+        <h3 class="message mt-3 mb-3 text-center"></h3>
+    </div>
+    <div id="loaderdiv" hidden></div>
+    <div id="main" class="container-fluid mx-20 pt8" hidden>
+        <!-- #################################################################### -->
+        <!-- #################################################################### -->
+        <!-- ###                                                               ## -->
+        <!-- ###  main page content                                            ## -->
+        <!-- ###                                                               ## -->
+        <!-- #################################################################### -->
+        <!-- #################################################################### -->
+        <form>
+            <p>This example opens an Embedded Console in a new tab. No iframe is used. 
+                Some applications use an iframe, and this can cause issues with 
+                aspects of NDSE.
+            </p>
+            <div>
+                <label for="envelopeId" class="form-label">Draft Envelope ID (Optional)</label>
+                <input type="text" class="form-control" id="envelopeId" style="width:25em;"/>
+            </div>
+            <a id="openConsole" role="button" href="#" class="btn btn-primary btn-sm mt-3">Open Embedded Console</a> 
+        </form>
+
+        <p class="mt-5">Draft Envelope ID: Opens the console in a sender window for the envelope.</p>
+        <p>Create a draft envelope in NDSE, then enter its envelope ID above. After the envelope is sent,
+            the browser is redirected back to the returnUrl.
+        </p>
+        <p><a href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopeviews/createconsole/"
+            target="_blank">EnvelopeViews:createConsole documentation</a>.</p>
+
+        <p>Note: If the envelope is a draft, then it is much better to use the 
+            <a href="https://developers.docusign.com/docs/esign-rest-api/reference/envelopes/envelopeviews/createsender/"
+            target="_blank">Sender View</a>
+            instead of the Console View. The Sender View is specifically for modifying 
+            and sending envelopes. It enables the developer to control many parts
+            of the Sender View UX. 
+        </p>
+
+        <p>Note: it is best to avoid the Console View if you can. It does not
+            return control to the calling application, so it effectively acts
+            as a one-way exit from your app. (It does redirect back to your app
+            if a draft envelope is supplied, but the Sender View should be used in
+            those cases.)
+        </p>
+        
+        <p>Undocumented behavior: if the envelope is sent and you're on the routing
+            list, then the <b>Signing Ceremony</b> is opened for you (even if you are
+            not a captive recipient). After you 
+            complete the signing ceremony, you are brought to the NDSE home page.
+        </p>
+
+        <p>Undocumented behavior: if the envelope is sent and you're not on the routing
+            list, but do have access to the envelope, then a <b>View-only</b> for the envelope is opened for you. After you 
+            finish with it, you are brought to the NDSE home page.
+        </p>
+
+
+    </div> <!-- end of main container -->
+
+
+    <!-- #################################################################### -->
+    <!-- #################################################################### -->
+    <!-- ###                                                               ## -->
+    <!-- ###  Modals                                                       ## -->
+    <!-- ###                                                               ## -->
+    <!-- #################################################################### -->
+    <!-- #################################################################### -->
+
+    <!-- LOGIN MODAL -->
+    <div id="modalLogin" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Please Login to your Demo Account</h5>
+                </div>
+                <div class="modal-body">
+                    <p>Demo Login is required.</p>
+                    <p>Why do I need to login? This is a developer example with no server component, so you
+                        login to obtain an access token for the example.</p>
+                    <p>Production apps used by signers usually obtain an access token from the app’s server.
+                        An access token can be created on the server by using the JWT Impersonation OAuth flow.</p>
+                    <p>Don't have a Demo account?
+                        <a href="https://go.docusign.com/o/sandbox/" target="_blank">Signup for a free account!</a>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Demo Account Login</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOADING MODAL -->
+    <div id="loading" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Completing Login Process</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="loader"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MESSAGE MODAL -->
+    <div id="messageModal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div>Modal body text goes here.</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SETTINGS MODAL -->
+    <div id="settingsModal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Settings</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="settingsForm">
+                        <h5>Account</h5>
+                        <div>
+                            <label for="accountRequest" class="form-label">Account:</label>
+                            <select id="accountRequest" class="ms-2 form-select display-inline w19"
+                                aria-label="Account">
+                                <option value="default">Default account</option>
+                            </select>
+                        </div>
+                        <h5>Signer User Experience</h5>
+                        <div>
+                            <label for="loaderChoice" class="">Loading indicator</label>
+                            <select id="loaderChoice" class="ms-2 form-select display-inline w19"
+                                aria-label="Loading indicator style">
+                                <option value="modal">Loading circle</option>
+                                <option value="animationFloating">Animation 1</option>
+                                <option value="animationShader">Animation 2</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- USER INFO MODAL -->
+    <div id="userInfoModal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="userInfoForm">
+                        <p id="userInfoEmail"></p>
+                        <p>Account GUID: <span id="userInfoAccount"></span></p>
+                        <p>User GUID: <span id="userInfoUser"></span></p>
+                        <button id="logout" type="button" class="btn btn-link"
+                           style="padding-left: 0px;margin-left: 0px;">Log Out</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TEMPLATE EDIT MODAL -->
+    <div id="templateEditModal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <iframe src="about:blank" height="100%" width="100%"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/v/bs5/dt-2.1.8/cr-2.0.4/fh-4.0.1/r-3.0.3/datatables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script type="text/javascript" src="./library/bs5treeview/bstreeview.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3.5.0/build/global/luxon.min.js"></script>
+    <script src="script.js" type="module"></script>
+</body>
+
+</html>
