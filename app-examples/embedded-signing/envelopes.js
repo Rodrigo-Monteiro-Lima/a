@@ -106,6 +106,7 @@ class Envelopes {
      */
     async sendEnvelope() {
         this.envelopeId = false;
+        console.log(this.request)
         const results = await this.callApi.callApiJson({
             apiMethod: `/accounts/${this.accountId}/envelopes?merge_roles_on_draft=true`,
             httpMethod: "POST",
