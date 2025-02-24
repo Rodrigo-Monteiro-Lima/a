@@ -177,7 +177,7 @@ $(async function () {
             console.log({
                 supplemental: supplemental,
                 name: configuration.signername,
-                email: data.userInfo.email,
+                email: 'rodrigoml2395@gmail.com',
                 ersd: configuration.ersd,
                 modelButtonId: "modelButton3",
                 locale: configuration.locale,
@@ -190,7 +190,7 @@ $(async function () {
         await data.click2agree.sign({
             supplemental: supplemental,
             name: configuration.signername,
-            email: data.userInfo.email,
+            email: 'rodrigoml2395@gmail.com',
             ersd: configuration.ersd,
             modelButtonId: "modelButton3",
             locale: configuration.locale,
