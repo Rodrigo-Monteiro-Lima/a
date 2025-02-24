@@ -178,13 +178,13 @@ $(async function () {
         console.log(data.userInfo)
         data.callApi = new CallApi({
             accessToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjY4MTg1ZmYxLTRlNTEtNGNlOS1hZjFjLTY4OTgxMjIwMzMxNyJ9.eyJUb2tlblR5cGUiOjUsIklzc3VlSW5zdGFudCI6MTc0MDM5OTc2MCwiZXhwIjoxNzQwNDAzMzYwLCJVc2VySWQiOiI4YTRhNTY2NC1jNGNiLTQ0NDgtODkwNS05OTgyOGQ3YWY2MzMiLCJzaXRlaWQiOjEsInNjcCI6WyJzaWduYXR1cmUiLCJkdHIucm9vbXMucmVhZCIsImR0ci5yb29tcy53cml0ZSIsImR0ci5kb2N1bWVudHMucmVhZCIsImR0ci5kb2N1bWVudHMud3JpdGUiLCJkdHIucHJvZmlsZS5yZWFkIiwiZHRyLnByb2ZpbGUud3JpdGUiLCJkdHIuY29tcGFueS5yZWFkIiwiZHRyLmNvbXBhbnkud3JpdGUiLCJyb29tX2Zvcm1zIiwiY2xpY2subWFuYWdlIiwiY2xpY2suc2VuZCIsIm9yZ2FuaXphdGlvbl9yZWFkIiwiZ3JvdXBfcmVhZCIsInBlcm1pc3Npb25fcmVhZCIsInVzZXJfcmVhZCIsInVzZXJfd3JpdGUiLCJhY2NvdW50X3JlYWQiLCJkb21haW5fcmVhZCIsImlkZW50aXR5X3Byb3ZpZGVyX3JlYWQiLCJ1c2VyX2RhdGFfcmVkYWN0IiwiYXNzZXRfZ3JvdXBfYWNjb3VudF9yZWFkIiwiYXNzZXRfZ3JvdXBfYWNjb3VudF9jbG9uZV93cml0ZSIsImFzc2V0X2dyb3VwX2FjY291bnRfY2xvbmVfcmVhZCIsIndlYmZvcm1zX3JlYWQiLCJ3ZWJmb3Jtc19pbnN0YW5jZV9yZWFkIiwid2ViZm9ybXNfaW5zdGFuY2Vfd3JpdGUiLCJhb3dfbWFuYWdlIiwib3JnYW5pemF0aW9uX3N1Yl9hY2NvdW50X3dyaXRlIiwib3JnYW5pemF0aW9uX3N1Yl9hY2NvdW50X3JlYWQiXSwiYXVkIjoiZjRkMjk3OWQtOGY5My00MDRlLTk5N2ItMjQxYzdlZDE3ZDg2IiwiYXpwIjoiZjRkMjk3OWQtOGY5My00MDRlLTk5N2ItMjQxYzdlZDE3ZDg2IiwiaXNzIjoiaHR0cHM6Ly9hY2NvdW50LWQuZG9jdXNpZ24uY29tLyIsInN1YiI6IjhhNGE1NjY0LWM0Y2ItNDQ0OC04OTA1LTk5ODI4ZDdhZjYzMyIsImFtciI6WyJqd3RfYnIiXSwiYWN0IjoiZjRkMjk3OWQtOGY5My00MDRlLTk5N2ItMjQxYzdlZDE3ZDg2In0.N4gjT3uFzbkAwIhqisUcXDKqHvXp8mxwxJiAKwtIaG7YpvAXu16guBm8L2sYb-EMyk0QoSu28X1h-A6iTwmLvF1UWDxsEwYB7SozpwjZEHeZCpQ3kmSrJcxHdabkreMr4WPl5p1cRCQB_3CUIdWkj3nk-SkfEFclIVOTSNIseKYPMnJcKsIy73my_zUnhl7QZuipArG_ieY2t7746C1l2s2Jip9HBouTxM1MUPZg1vOufi1kVVAktjmGRe-3ETGhNahvCsBnLp5imtOxM5HPtQflO20s0eKGwlV-yLyaLHBXFaPvc23xGrvHcWh8nVRxIIe0PsxzuPj8LI4wWNmwcA',
-            apiBaseUrl: apiBaseUrl
+            apiBaseUrl: 'https://demo.docusign.net'
         });
         data.envelopes = new Envelopes({
             showMsg: toast,
             messageModal: messageModal,
             loadingModal: data.loadingModal,
-            clientId: oAuthClientID,
+            clientId: 'f4d2979d-8f93-404e-997b-241c7ed17d86',
             accountId: accountId,
             callApi: data.callApi,
             logger: data.logger,
@@ -197,7 +197,7 @@ $(async function () {
             messageModal: messageModal,
             loadingModal: data.loadingModal,
             loader: data.loader,
-            clientId: oAuthClientID,
+            clientId: 'f4d2979d-8f93-404e-997b-241c7ed17d86',
             accountId: accountId,
             callApi: data.callApi,
             mainElId: "main",
