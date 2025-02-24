@@ -171,9 +171,9 @@ $(async function () {
         // storageSet(CONFIG_STORAGE, configuration);
         // if (!checkToken()){return}
         // data.logger.post("Click to Agree");
-        // const supplemental = [
-        //     {include: configuration.supp1include, signerMustAcknowledge: configuration.supp1signerMustAcknowledge},
-        //     {include: configuration.supp2include, signerMustAcknowledge: configuration.supp2signerMustAcknowledge}];
+        const supplemental = [
+            {include: configuration.supp1include, signerMustAcknowledge: configuration.supp1signerMustAcknowledge},
+            {include: configuration.supp2include, signerMustAcknowledge: configuration.supp2signerMustAcknowledge}];
             console.log({
                 supplemental: supplemental,
                 name: configuration.signername,
