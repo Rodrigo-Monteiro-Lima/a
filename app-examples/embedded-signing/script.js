@@ -168,12 +168,25 @@ $(async function () {
         e.preventDefault();
         formToConfiguration();
         console.log('aqui')
-        storageSet(CONFIG_STORAGE, configuration);
+        // storageSet(CONFIG_STORAGE, configuration);
         // if (!checkToken()){return}
-        data.logger.post("Click to Agree");
+        // data.logger.post("Click to Agree");
         const supplemental = [
             {include: configuration.supp1include, signerMustAcknowledge: configuration.supp1signerMustAcknowledge},
             {include: configuration.supp2include, signerMustAcknowledge: configuration.supp2signerMustAcknowledge}];
+            console.log({
+                supplemental: supplemental,
+                name: configuration.signername,
+                email: data.userInfo.email,
+                ersd: configuration.ersd,
+                modelButtonId: "modelButton3",
+                locale: configuration.locale,
+                document: configuration.document,
+                outputStyle: configuration.outputStyle,
+                useIframe: configuration.useIframe,
+                useModal: configuration.useModal,
+                showDecline: configuration.showDecline,
+            })
         await data.click2agree.sign({
             supplemental: supplemental,
             name: configuration.signername,
