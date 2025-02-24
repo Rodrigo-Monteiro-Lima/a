@@ -734,60 +734,61 @@ $(async function () {
         clientId: platform,
         showMsg: toast
     });
-    await data.authCodePkce.oauthResponse();
-    // If we're not logged in, then ask to start the login flow.
-    if (!data.authCodePkce.checkToken()) {
-        loginModal.show();
-    } else {
-        // logged in
-        data.loadingModal.show("Completing Login Process")
-        if (await completeLogin()) {
-            // tooltips: https://getbootstrap.com/docs/5.3/components/tooltips/
-            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-            const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-            const smsEl = document.querySelector("#sms");
-            data.iti = intlTelInput(smsEl, {
-                utilsScript:
-                    "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.min.js"
-            });    
-            const mode = storageGet(MODE_STORAGE); // restore mode
-            if (mode) {configuration.mode = mode};
-            settingsGet(configuration);
-            let config = storageGet(CONFIG_STORAGE);
-            storageSet(CONFIG_STORAGE, false); // reset
-            if (config) {configuration = config}; // overwrite from QP
-            setFormFromConfiguration();
-            $(`#signername` ).val(data.userInfo.name);
-            $(`#signername1`).val(data.userInfo.name);
-            $(`#signername2`).val(data.userInfo.name);
-            $(`#signername3`).val(data.userInfo.name);
-            $(`#userInfoModal .modal-title`).text(data.userInfo.name);
-            $(`#userInfoUser`).text(data.userInfo.userId);
-            $(`#userInfoEmail`).text(data.userInfo.email);
-            data.loader.loaderChoice = configuration.loaderChoice; 
-            data.modelButton1Changes = new ButtonOnChange({
-                buttonId: "modelButton1",
-                textId: "buttonText1",
-                defaultText: "Submit",
-                backgroundColorId: "backgroundColor1",
-                textColorId: "textColor1"
-            });
-            data.modelButton2Changes = new ButtonOnChange({
-                buttonId: "modelButton2",
-                backgroundColorId: "backgroundColor2",
-                textColorId: "textColor2"
-            });
-            data.modelButton3Changes = new ButtonOnChange({
-                buttonId: "modelButton3",
-                textId: "buttonText3",
-                defaultText: "Agree",
-                backgroundColorId: "backgroundColor3",
-                textColorId: "textColor3"
-            });
-        } else {
-            // couldn't login
-            data.loadingModal.hide();
-            loginModal.show();            
-        }
-    }
+    // await data.authCodePkce.oauthResponse();
+    // // If we're not logged in, then ask to start the login flow.
+    // if (!data.authCodePkce.checkToken()) {
+    //     loginModal.show();
+    // } else {
+    //     // logged in
+    //     data.loadingModal.show("Completing Login Process")
+    //     if (await completeLogin()) {
+    //         // tooltips: https://getbootstrap.com/docs/5.3/components/tooltips/
+    //         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    //         const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    //         const smsEl = document.querySelector("#sms");
+    //         data.iti = intlTelInput(smsEl, {
+    //             utilsScript:
+    //                 "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.min.js"
+    //         });    
+    //         const mode = storageGet(MODE_STORAGE); // restore mode
+    //         if (mode) {configuration.mode = mode};
+    //         settingsGet(configuration);
+    //         let config = storageGet(CONFIG_STORAGE);
+    //         storageSet(CONFIG_STORAGE, false); // reset
+    //         if (config) {configuration = config}; // overwrite from QP
+    //         setFormFromConfiguration();
+    //         $(`#signername` ).val(data.userInfo.name);
+    //         $(`#signername1`).val(data.userInfo.name);
+    //         $(`#signername2`).val(data.userInfo.name);
+    //         $(`#signername3`).val(data.userInfo.name);
+    //         $(`#userInfoModal .modal-title`).text(data.userInfo.name);
+    //         $(`#userInfoUser`).text(data.userInfo.userId);
+    //         $(`#userInfoEmail`).text(data.userInfo.email);
+    //         data.loader.loaderChoice = configuration.loaderChoice; 
+    //         data.modelButton1Changes = new ButtonOnChange({
+    //             buttonId: "modelButton1",
+    //             textId: "buttonText1",
+    //             defaultText: "Submit",
+    //             backgroundColorId: "backgroundColor1",
+    //             textColorId: "textColor1"
+    //         });
+    //         data.modelButton2Changes = new ButtonOnChange({
+    //             buttonId: "modelButton2",
+    //             backgroundColorId: "backgroundColor2",
+    //             textColorId: "textColor2"
+    //         });
+    //         data.modelButton3Changes = new ButtonOnChange({
+    //             buttonId: "modelButton3",
+    //             textId: "buttonText3",
+    //             defaultText: "Agree",
+    //             backgroundColorId: "backgroundColor3",
+    //             textColorId: "textColor3"
+    //         });
+    //     } 
+    //     // else {
+    //     //     // couldn't login
+    //     //     data.loadingModal.hide();
+    //     //     loginModal.show();            
+    //     // }
+    // }
 })
