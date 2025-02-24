@@ -171,9 +171,9 @@ $(async function () {
         // storageSet(CONFIG_STORAGE, configuration);
         // if (!checkToken()){return}
         // data.logger.post("Click to Agree");
-        const supplemental = [
-            {include: configuration.supp1include, signerMustAcknowledge: configuration.supp1signerMustAcknowledge},
-            {include: configuration.supp2include, signerMustAcknowledge: configuration.supp2signerMustAcknowledge}];
+        // const supplemental = [
+        //     {include: configuration.supp1include, signerMustAcknowledge: configuration.supp1signerMustAcknowledge},
+        //     {include: configuration.supp2include, signerMustAcknowledge: configuration.supp2signerMustAcknowledge}];
             console.log({
                 supplemental: supplemental,
                 name: configuration.signername,
@@ -351,16 +351,16 @@ $(async function () {
      * checkToken returns true if we're good to go.
      */
     function checkToken() {
-        const tokenOk = data.authCodePkce.checkToken();
-        if (!tokenOk) {
-            messageModal({style: 'text', title: "Your Login Session Has Expired", 
-            msg: 
-            `<p>Your 8 hour login session has expired.</p>
-            <p>Recommendation: use <b>Save to URL</b>
-            (top navigation) to save your work, then reload
-            this page from the URL and login again.</p>`});
-        }
-        return tokenOk
+        // const tokenOk = data.authCodePkce.checkToken();
+        // if (!tokenOk) {
+        //     messageModal({style: 'text', title: "Your Login Session Has Expired", 
+        //     msg: 
+        //     `<p>Your 8 hour login session has expired.</p>
+        //     <p>Recommendation: use <b>Save to URL</b>
+        //     (top navigation) to save your work, then reload
+        //     this page from the URL and login again.</p>`});
+        // }
+        return true
     }
 
     /***
